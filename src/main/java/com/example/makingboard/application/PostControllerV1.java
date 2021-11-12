@@ -1,10 +1,8 @@
 package com.example.makingboard.application;
 
-import com.example.makingboard.application.board.PostService;
+import com.example.makingboard.application.board.PosterService;
 import com.example.makingboard.application.board.S3Service;
-import com.example.makingboard.application.board.dto.PostResponseDto;
-import com.example.makingboard.application.board.dto.PostSaveRequestDto;
-import com.example.makingboard.application.board.dto.PostUpdateRequestDto;
+import com.example.makingboard.application.board.dto.PosterResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +13,7 @@ import java.io.IOException;
 public class PostControllerV1 {
 
     private S3Service s3Service;
-    private PostService postService;
+    private PosterService postService;
 
 
     @PostMapping("/api/v1/post")
@@ -31,7 +29,7 @@ public class PostControllerV1 {
 
 
     @GetMapping("/api/v1/post/{id}")
-    public PostResponseDto findById(@PathVariable Long id) {
+    public PosterResponse findById(@PathVariable Long id) {
         return postService.findById(id);
     }
 

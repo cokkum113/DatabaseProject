@@ -1,8 +1,7 @@
 package com.example.makingboard.application.member.persistence.entity;
 
 import com.example.makingboard.application.board.persistence.entity.CommentEntity;
-import com.example.makingboard.application.board.persistence.entity.PostEntity;
-import com.example.makingboard.application.member.type.SocialProviderType;
+import com.example.makingboard.application.board.persistence.entity.PosterEntity;
 import com.example.makingboard.common.DefaultEntity;
 import lombok.*;
 
@@ -33,22 +32,20 @@ public class MemberEntity extends DefaultEntity {
     @Column(name = "social_id")
     private String socialId;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "social_provider")
-    private SocialProviderType socialProvider;
-
     @OneToMany(mappedBy = "memberEntity")
     private List<CommentEntity> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "memberEntity")
-    private List<PostEntity> posts = new ArrayList<>();
+    private List<PosterEntity> posts = new ArrayList<>();
 
-    public MemberEntity(String name, String email, String info, String socialId, SocialProviderType socialProvider) {
+    @Builder
+    public MemberEntity(String name, String email, String info, String socialId, List<CommentEntity> comments, List<PosterEntity> posts) {
         this.name = name;
         this.email = email;
         this.info = info;
         this.socialId = socialId;
-        this.socialProvider = socialProvider;
+        this.comments = comments;
+        this.posts = posts;
     }
 
 

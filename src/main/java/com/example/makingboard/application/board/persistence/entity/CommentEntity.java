@@ -19,7 +19,7 @@ public class CommentEntity extends DefaultEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
-    private PostEntity postEntity;
+    private PosterEntity postEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
@@ -28,7 +28,7 @@ public class CommentEntity extends DefaultEntity {
     @Column(name = "text", nullable = false)
     private String text;
 
-    public CommentEntity(MemberEntity member, PostEntity post, String text) {
+    public CommentEntity(MemberEntity member, PosterEntity post, String text) {
         this.memberEntity = member;
         this.postEntity = post;
         this.text = text;

@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostEntity extends DefaultEntity {
+public class PosterEntity extends DefaultEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,15 +39,17 @@ public class PostEntity extends DefaultEntity {
     private List<CommentEntity> comments = new ArrayList<>();
 
     @Builder
-    public PostEntity(String title, String content, String imageUrl) {
+    public PosterEntity(String title, String content, String imageUrl, MemberEntity memberEntity) {
         this.title = title;
         this.content = content;
         this.imageUrl = imageUrl;
+        this.memberEntity = memberEntity;
     }
 
-    public void modifyContent(String title, String imageUrl, String content) {
+    public void modifyContent(String title, String content, String imageUrl) {
         this.title = title;
-        this.imageUrl = imageUrl;
         this.content = content;
+        this.imageUrl = imageUrl;
+
     }
 }

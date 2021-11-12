@@ -1,35 +1,43 @@
 package com.example.makingboard.application.board;
-/*
-import com.example.makingboard.application.board.dto.PostResponse;
-import com.example.makingboard.application.board.persistence.PostRepository;
-import com.example.makingboard.application.board.persistence.entity.PostEntity;
+
+import com.example.makingboard.application.board.change.MemberOfEntity;
+import com.example.makingboard.application.board.change.PosterOfEntity;
+import com.example.makingboard.application.board.dto.PosterResponse;
+import com.example.makingboard.application.member.dto.MemberVO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Optional;
-
+/*
+보드 서비스에서 할 일
+1. 사용자의 이름으로 작성한 포스터들 조회
+2. 포스터들을 전체 조회하기
+3. (구현 기간 가능하다면) 최신순으로 보여주기
+4. (구현 기간 가능하다면) 조회수 많은 순으로 보여주기
+ */
 @Service
 @RequiredArgsConstructor
 public class BoardService {
 
-    private final PostRepository postRepository;
+    private final MemberOfEntity memberOfEntity;
+    private final PosterOfEntity posterOfEntity;
 
+    //사용자의 이름으로 작성한 포스터들 조회
     @Transactional(readOnly = true)
-    public PostResponse getPost(Long userId, Long posterId) {
-        PostEntity post = Optional.ofNullable(postRepository.getById(posterId))
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "존재하지 않는 포스트입니다."));
-        return PostResponse.builder()
-                .memberId(userId)
-                .postId(posterId)
-                .content(post.getContent())
-                .imageUrl(post.getImageUrl())
-                .title(post.getTitle())
-                .build();
+    public PosterResponse getPosters(Long memberId, Long posterId) {
+        MemberVO member = memberOfEntity.changeMemberEntityToVO(memberId);
+        String memberName = member.getName();
+        PosterResponse posters = posterOfEntity.findPostersByName(memberName);
+        return posters;
     }
+
+    //포스터들을 전체 조회하기
+    @Transactional(readOnly = true)
+    public PosterResponse getAllPosters() {
+        PosterResponse allPosters = posterOfEntity.findAllPosters();
+        return allPosters;
+    }
+
+
 }
 
-
- */

@@ -1,18 +1,19 @@
 package com.example.makingboard.application.board.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Getter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CommentResponse {
+public class PosterRequest {
+    //작성자의 이름
+    private String name;
 
-    private List<CommentVO> comments;
+    private String title;
 
+    private String imageUrl;
+
+    private String content;
 }

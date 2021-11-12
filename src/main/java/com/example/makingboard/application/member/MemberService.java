@@ -1,34 +1,21 @@
 package com.example.makingboard.application.member;
 
 import com.example.makingboard.application.member.domain.Member;
-import com.example.makingboard.application.member.dto.KakaoProfileResponse;
+import com.example.makingboard.application.member.dto.MemberVO;
 import com.example.makingboard.application.member.persistence.MemberRepository;
 import com.example.makingboard.application.member.type.SocialProviderType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 /*
+1. 회원가입
+2. 회원 조회
+3. 회원 탈퇴
+ */
+
+
 @Service
 @RequiredArgsConstructor
 public class MemberService {
-    private final MemberRepository memberRepository;
-    private final KakaoClient kakaoClient;
 
-    public Member getMember(Long memberId) {
-        Member member = memberRepository.getById(memberId);
-        return member;
-    }
-
-
-    public Member createMember(String kakaoAccessToken, Member member) {
-        KakaoProfileResponse profile = kakaoClient.getProfile(kakaoAccessToken);
-        return memberRepository.save(member.asEntity());
-    }
-
-    private Member isExist(String socialId, SocialProviderType socialProvider) {
-        return memberRepository.existsBySocialIdAndSocialProvider(socialId, socialProvider);
-    }
 }
-
-
- */
