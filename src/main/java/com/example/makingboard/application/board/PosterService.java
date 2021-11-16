@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 /*
 1. 포스터 생성하기
 2. 포스터 수정하기
@@ -24,18 +26,16 @@ public class PosterService {
     //포스터 생성하기, 저장된 회원만 poster를 만들수 있도록 구현
     @Transactional
     public void createPoster(Long memberId, PosterRequest posterRequest) {
-        MemberEntity member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 멤버가 없습니다. 잘못된 memberId = " + memberId));
+        Optional<MemberEntity> member = memberRepository.findById(memberId);
+
         posterRepository.save(PosterEntity.builder()
-                .memberEntity(member)
+                .memberEntity(member.orElseThrow(NullPointerException::new))
                 .title(posterRequest.getTitle())
                 .content(posterRequest.getContent())
                 .imageUrl(posterRequest.getImageUrl())
-                .build()
-        );
-        //TODO 만약 이것 밖에 builder에 안들어간다면 comments는 comment쪽 로직으로 들어가게 구현하는건지
-
+                .build());
     }
+
 
     @Transactional
     public void modifyContent(Long postId, PosterRequest posterRequest) {
@@ -52,6 +52,9 @@ public class PosterService {
         posterRepository.delete(posterEntity);
 
     }
+
+
+
 
 }
 

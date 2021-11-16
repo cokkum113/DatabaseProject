@@ -1,12 +1,14 @@
 package com.example.makingboard.application.board;
 
-import com.example.makingboard.application.board.change.MemberOfEntity;
 import com.example.makingboard.application.board.change.PosterOfEntity;
 import com.example.makingboard.application.board.dto.PosterResponse;
-import com.example.makingboard.application.member.dto.MemberVO;
+import com.example.makingboard.application.member.MemberService;
+import com.example.makingboard.application.member.persistence.entity.MemberEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 /*
 보드 서비스에서 할 일
@@ -19,14 +21,15 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class BoardService {
 
-    private final MemberOfEntity memberOfEntity;
     private final PosterOfEntity posterOfEntity;
+    private final MemberService memberService;
+
 
     //사용자의 이름으로 작성한 포스터들 조회
     @Transactional(readOnly = true)
     public PosterResponse getPosters(Long memberId, Long posterId) {
-        MemberVO member = memberOfEntity.changeMemberEntityToVO(memberId);
-        String memberName = member.getName();
+        Optional<MemberEntity> member = memberService.findMemberById(memberId);
+        String memberName = member.get().getName();
         PosterResponse posters = posterOfEntity.findPostersByName(memberName);
         return posters;
     }

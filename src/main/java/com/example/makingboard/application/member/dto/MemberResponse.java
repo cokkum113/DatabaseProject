@@ -1,25 +1,24 @@
 package com.example.makingboard.application.member.dto;
 
-import com.example.makingboard.application.board.dto.CommentVO;
-import com.example.makingboard.application.board.dto.PosterVO;
-import lombok.*;
+import com.example.makingboard.application.board.persistence.entity.CommentEntity;
+import com.example.makingboard.application.board.persistence.entity.PosterEntity;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@NoArgsConstructor
+@Builder
 public class MemberResponse {
-    private Long id;
-    private String name;
-    private String email;
-    private String info;
-    private String socialId;
 
-    private List<CommentVO> comments = new ArrayList<>();
-    private List<PosterVO> posts = new ArrayList<>();
+    private String name;
+
+    private List<CommentEntity> comments;
+
+    private List<PosterEntity> posts;
 
 }

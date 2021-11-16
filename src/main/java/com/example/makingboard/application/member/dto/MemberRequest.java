@@ -1,16 +1,15 @@
 package com.example.makingboard.application.member.dto;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter
 @AllArgsConstructor
+@Getter
 @NoArgsConstructor
-public class MemberCreateRequest {
-    private Long id;
+public class MemberRequest {
     private String name;
     private String email;
-    private String info;
-    private String socialId;
+    private String password;
 }

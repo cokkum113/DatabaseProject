@@ -32,7 +32,7 @@ public class CommentService {
     //댓글 쓰기
     @Transactional
     public void writeComment(CommentRequest commentRequest) {
-        MemberEntity member = memberRepository.findByName(commentRequest.getName());
+        MemberEntity member = memberRepository.findFirstByName(commentRequest.getName()).get();
         PosterEntity poster = posterRepository.findByPosterId(member.getId());
         commentRepository.save(CommentEntity.builder()
                 .memberEntity(member)
@@ -44,7 +44,7 @@ public class CommentService {
     //수정하기
     @Transactional
     public void modifyComment(Long commentId, CommentRequest commentRequest) {
-        MemberEntity member = memberRepository.findByName(commentRequest.getName());
+        MemberEntity member = memberRepository.findFirstByName(commentRequest.getName()).get();
         PosterEntity poster = posterRepository.findByPosterId(member.getId());
         List<CommentEntity> comments = poster.getComments();
         for (CommentEntity comment : comments) {

@@ -26,11 +26,8 @@ public class MemberEntity extends DefaultEntity {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "info")
-    private String info;
-
-    @Column(name = "social_id")
-    private String socialId;
+    @Column(name = "password")
+    private String password;
 
     @OneToMany(mappedBy = "memberEntity")
     private List<CommentEntity> comments = new ArrayList<>();
@@ -39,11 +36,10 @@ public class MemberEntity extends DefaultEntity {
     private List<PosterEntity> posts = new ArrayList<>();
 
     @Builder
-    public MemberEntity(String name, String email, String info, String socialId, List<CommentEntity> comments, List<PosterEntity> posts) {
+    public MemberEntity(String name, String email, String password, List<CommentEntity> comments, List<PosterEntity> posts) {
         this.name = name;
         this.email = email;
-        this.info = info;
-        this.socialId = socialId;
+        this.password = password;
         this.comments = comments;
         this.posts = posts;
     }

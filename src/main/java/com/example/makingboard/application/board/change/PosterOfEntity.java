@@ -32,8 +32,7 @@ public class PosterOfEntity {
         for (PosterEntity poster : posterEntities) {
             PosterVO posterVO = new PosterVO(poster.getId(), poster.getTitle(), poster.getImageUrl(), poster.getContent());
 
-            //TODO 왜 postResponse는 List인데 add로 안들어 갈까요...?
-            postResponse.add(posterVO);
+            postResponse.getPosters().add(posterVO);
         }
         return postResponse;
     }
@@ -43,8 +42,7 @@ public class PosterOfEntity {
         PosterResponse postResponse = new PosterResponse();
         for (PosterEntity poster : posterEntities) {
             PosterVO posterVO = new PosterVO(poster.getId(), poster.getTitle(), poster.getImageUrl(), poster.getContent());
-            //TODO 위와 같은 문제 , 전체 조회도 똑같이 하면 될거같은데 add가 안되는 게 문제.
-            postResponse.add(posterVO);
+            postResponse.getPosters().add(posterVO);
         }
         return postResponse;
     }
