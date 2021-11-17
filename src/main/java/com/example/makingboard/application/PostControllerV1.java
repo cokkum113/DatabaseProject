@@ -2,18 +2,14 @@ package com.example.makingboard.application;
 
 import com.example.makingboard.application.board.BoardService;
 import com.example.makingboard.application.board.PosterService;
-import com.example.makingboard.application.board.S3Service;
 import com.example.makingboard.application.board.dto.PosterRequest;
 import com.example.makingboard.application.board.dto.PosterResponse;
-import com.example.makingboard.application.board.dto.PosterVO;
-import com.example.makingboard.application.board.persistence.entity.PosterEntity;
 import com.example.makingboard.common.ApiResponse;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /*
@@ -26,7 +22,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class PostControllerV1 {
 
-    private S3Service s3Service;
+//    private S3Service s3Service;
     private PosterService posterService;
     private BoardService boardService;
 
