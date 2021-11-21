@@ -1,13 +1,12 @@
 package com.example.makingboard.application.member;
 
-import com.example.makingboard.application.member.dto.MemberRequest;
+import antlr.StringUtils;
+import com.example.makingboard.application.member.persistence.entity.Member;
 import com.example.makingboard.application.member.persistence.MemberRepository;
-import com.example.makingboard.application.member.persistence.entity.MemberEntity;
 import lombok.RequiredArgsConstructor;
+import org.codehaus.groovy.util.StringUtil;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 /*
@@ -18,41 +17,27 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class MemberService  {
+public class MemberService {
     private final MemberRepository memberRepository;
 
-    @Transactional
-    public void createMember(MemberRequest memberRequest) {
-        try {
-            memberRepository.save(
-                    MemberEntity.builder()
-                            .name(memberRequest.getName())
-                            .email(memberRequest.getEmail())
-                            .password(memberRequest.getPassword())
-                            .build()
-            );
-        } catch (Exception e) {
-            throw new IllegalArgumentException("이미 있는 유저입니다");
+    public Member getOrCreate(String name, String password) {
+        Optional<Member> member = memberRepository.findFirstByName(name);
+        if(member.isPresent()) {
+            if(member.get().getPassword().equals(password)) {
+                throw new RuntimeException("Password is wrong");
+            }
+            return member.get();
+        } else {
+            return createMember(name, password);
         }
-
     }
 
-    @Transactional
-    public List<MemberEntity> findAllMember() {
-        return memberRepository.findAll();
+    public Member createMember(String name, String password) {
+        boolean isExist = memberRepository.existsByName(name);
+        if(isExist) {
+            throw new RuntimeException("Can not create the member with the name");
+        }
+        Member newMember = new Member(name, password);
+        return memberRepository.save(newMember);
     }
-
-    @Transactional
-    public Optional<MemberEntity> findMemberById(Long id) {
-        return memberRepository.findById(id);
-    }
-
-    @Transactional
-    public void deleteMember(Long memberId) {
-        MemberEntity memberEntity = memberRepository.findById(memberId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다. 잘못된 memberId = " + memberId));
-        memberRepository.delete(memberEntity);
-
-    }
-
 }

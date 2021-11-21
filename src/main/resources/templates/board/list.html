@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="board/layout/basic">
+<th:block layout:fragment="title">
+    <title>This page is a list page</title>
+</th:block>
+
+<th:block layout:fragment="search">
+    <form action="#" id="searchform-header" class="searchform js__toggle active pull-right">
+        <input type="search" placeholder="Search..." class="input-search">
+        <button class="mdi mdi-magnify button-search" type="submit">
+            <i class="fa fa-search" aria-hidden="true"></i>
+        </button>
+    </form>
+</th:block>
+
+<th:block layout:fragment="content">
+    <div class="table-responsive clearfix">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>작성자</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${not #lists.isEmpty( posterList )}" th:each="row : ${posterList}">
+                <td class="text-left">
+                    <a th:href="@{/board/view( idx=${row.getId()} )}" th:text="${row.getTitle()}"></a>
+                </td>
+                <td th:text="${row.getAuthor()}"></td>
+            </tr>
+            <tr th:unless="${not #lists.isEmpty( posterList )}">
+                <td colspan="5">조회된 결과가 없습니다.</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="btn_wrap text-right">
+            <a th:href="@{/board/write}" class="btn btn-primary waves-effect waves-light">Write</a>
+        </div>
+
+        <th:block layout:fragment="paging">
+            <nav aria-label="Page navigation" class="text-center">
+                <ul class="pagination">
+                    <li>
+                        <a href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li>
+                        <a href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </th:block>
+    </div>
+</th:block>
+</html>

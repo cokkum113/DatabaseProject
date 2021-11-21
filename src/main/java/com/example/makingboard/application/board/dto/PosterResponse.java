@@ -1,16 +1,22 @@
 package com.example.makingboard.application.board.dto;
 
-import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.example.makingboard.application.board.persistence.entity.Poster;
+import lombok.Getter;
 
 @Getter
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 public class PosterResponse {
+    private Long id;
+    private String title;
+    private String content;
+    private String author;
 
-    private List<PosterVO> posters = new ArrayList<>();
+
+
+    public PosterResponse(Poster poster) {
+        this.id = poster.getId();
+        this.title = poster.getTitle();
+        this.content = poster.getContent();
+        this.author = poster.getAuthor();
+    }
 
 }

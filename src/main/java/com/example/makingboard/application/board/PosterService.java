@@ -1,56 +1,60 @@
 package com.example.makingboard.application.board;
 
 import com.example.makingboard.application.board.dto.PosterRequest;
+import com.example.makingboard.application.board.dto.PosterResponse;
+import com.example.makingboard.application.board.dto.PosterUpdateRequest;
 import com.example.makingboard.application.board.persistence.PosterRepository;
-import com.example.makingboard.application.board.persistence.entity.PosterEntity;
-import com.example.makingboard.application.member.persistence.MemberRepository;
-import com.example.makingboard.application.member.persistence.entity.MemberEntity;
+import com.example.makingboard.application.board.persistence.entity.Poster;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 
-/*
-1. 포스터 생성하기
-2. 포스터 수정하기
-3. 포스터 삭제하기
- */
+
 @Service
 @RequiredArgsConstructor
 public class PosterService {
 
     private final PosterRepository posterRepository;
-    private final MemberRepository memberRepository;
-
-    //포스터 생성하기, 저장된 회원만 poster를 만들수 있도록 구현
-    @Transactional
-    public void createPoster(Long memberId, PosterRequest posterRequest) {
-        Optional<MemberEntity> member = memberRepository.findById(memberId);
-
-        posterRepository.save(PosterEntity.builder()
-                .memberEntity(member.orElseThrow(NullPointerException::new))
-                .title(posterRequest.getTitle())
-                .content(posterRequest.getContent())
-                .imageUrl(posterRequest.getImageUrl())
-                .build());
-    }
 
 
     @Transactional
-    public void modifyContent(Long postId, PosterRequest posterRequest) {
-        PosterEntity postEntity = posterRepository.findById(postId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. 잘못된 postId = " + postId));
-        postEntity.modifyContent(posterRequest.getTitle(), posterRequest.getContent(), posterRequest.getImageUrl());
-        //수정하는 것을 바로 entity에 접근하는게 굉장히 위험한 방법인가? 그럼 이것도 VO로 바꿔야하는지?
+    public Long savePoster(PosterRequest posterRequest) {
+        return posterRepository.save(posterRequest.toEntity()).getId();
     }
 
     @Transactional
-    public void deletePoster(Long postId) {
-        PosterEntity posterEntity = posterRepository.findById(postId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. 잘못된 postId = " + postId));
-        posterRepository.delete(posterEntity);
+    public Long updatePoster(Long id, PosterUpdateRequest posterUpdateRequest) {
+        Poster poster = posterRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("없는 게시물 입니다."));
+        poster.update(posterUpdateRequest.getTitle(), posterUpdateRequest.getContent());
+        return id;
+    }
 
+    @Transactional
+    public PosterResponse getPoster(Long id) {
+        Poster poster = posterRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("없는 게시물 입니다."));
+        return new PosterResponse(poster);
+    }
+
+    @Transactional
+    public List<PosterResponse> getPosterList() {
+        List<Poster> posterList = posterRepository.findAll();
+        List<PosterResponse> posterResponseList = new ArrayList<>();
+
+        for (Poster poster : posterList) {
+            PosterResponse posterResponse = new PosterResponse(poster);
+            posterResponseList.add(posterResponse);
+        }
+        return posterResponseList;
+    }
+
+    @Transactional
+    public void deletePoster(Long id) {
+        posterRepository.deleteById(id);
     }
 
 
