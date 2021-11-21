@@ -15,7 +15,7 @@ public class PosterServiceTest {
     @Test
     public void createPost() {
         for(int i = 0; i < 100; i++) {
-            PosterRequest request = new PosterRequest(i + "TEST" + i, i + "TEST" + i, i + "TEST" + i);
+            PosterRequest request = new PosterRequest("Title" + i, "Content" + i, "Author" + i, "Password");
             posterService.savePoster(request);
         }
     }

@@ -5,6 +5,8 @@ import com.example.makingboard.application.board.dto.PosterResponse;
 import com.example.makingboard.application.board.dto.PosterUpdateRequest;
 import com.example.makingboard.application.board.persistence.PosterRepository;
 import com.example.makingboard.application.board.persistence.entity.Poster;
+import com.example.makingboard.application.member.MemberService;
+import com.example.makingboard.application.member.persistence.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,13 +18,16 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class PosterService {
-
+    private final MemberService memberService;
     private final PosterRepository posterRepository;
 
 
     @Transactional
     public Long savePoster(PosterRequest posterRequest) {
-        return posterRepository.save(posterRequest.toEntity()).getId();
+        Member author = memberService.getOrCreate(posterRequest.getAuthor(), posterRequest.getPassword());
+        Poster poster = posterRequest.toEntity();
+        poster.setAuthor(author);
+        return posterRepository.save(poster).getId();
     }
 
     @Transactional
@@ -56,10 +61,6 @@ public class PosterService {
     public void deletePoster(Long id) {
         posterRepository.deleteById(id);
     }
-
-
-
-
 }
 
 

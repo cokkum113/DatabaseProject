@@ -29,7 +29,6 @@ public class PosterRepositoryTest {
         posterRepository.save(Poster.builder()
                 .title("TEST")
                 .content("SUCCESS")
-                .author("J")
                 .build());
 
         List<Poster> posters = posterRepository.findAll();
@@ -38,9 +37,6 @@ public class PosterRepositoryTest {
 
         assertThat(testingPoster.getTitle()).isEqualTo("TEST");
         assertThat(testingPoster.getContent()).isEqualTo("SUCCESS");
-
-        assertThat(testingPoster.getAuthor()).isEqualTo("J");
-
     }
 
 

@@ -25,14 +25,13 @@
             </thead>
             <tbody>
             <tr th:if="${not #lists.isEmpty( posterList )}" th:each="row : ${posterList}">
+                <td th:text="${row.getId()}"></td>
                 <td class="text-left">
                     <a th:href="@{/v1/posts(postId=${row.getId()})}" th:text="${row.getTitle()}"></a>
                 </td>
                 <td th:text="${row.getAuthor()}"></td>
             </tr>
-            <tr th:unless="${not #lists.isEmpty( posterList )}">
-                <td colspan="5">조회된 결과가 없습니다.</td>
-            </tr>
+
             </tbody>
         </table>
 

@@ -30,9 +30,6 @@ public class Poster extends DefaultEntity {
     @Column(name = "content", nullable = false)
     private String content;
 
-    @Column(name = "author", nullable = false)
-    private String author;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
@@ -41,14 +38,18 @@ public class Poster extends DefaultEntity {
     private List<Comment> comments = new ArrayList<>();
 
     @Builder
-    public Poster(String title, String content, String author) {
+    public Poster(String title, String content) {
         this.title = title;
         this.content = content;
-        this.author = author;
     }
 
     public void update(String title, String content) {
         this.title = title;
         this.content = content;
+    }
+
+    public void setAuthor(Member member) {
+        this.member = member;
+        member.getPosts().add(this);
     }
 }

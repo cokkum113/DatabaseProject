@@ -57,15 +57,17 @@ public class PostControllerV1 {
 
     @GetMapping("/v1/posts/write")
     public String writePoster(Model model) {
-        model.addAttribute("poster", new PosterRequest());
+        model.addAttribute("posterRequest", new PosterRequest());
 
         return "board/write";
     }
 
     @PostMapping(value = "/v1/posts/save")
-    public String savePoster(PosterRequest posterRequest) {
+    public String savePoster(PosterRequest posterRequest, Model model) {
         posterService.savePoster(posterRequest);
-        return "redirect:/board/list";
+        List<PosterResponse> posterList = posterService.getPosterList();
+        model.addAttribute("posterList", posterList);
+        return "board/list";
     }
 
 
