@@ -35,7 +35,7 @@ public class Poster extends DefaultEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    private Member memberEntity;
+    private Member member;
 
     @OneToMany(mappedBy = "post")
     private List<Comment> comments = new ArrayList<>();

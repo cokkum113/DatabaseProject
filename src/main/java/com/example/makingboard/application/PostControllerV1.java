@@ -37,32 +37,40 @@ public class PostControllerV1 {
 //        return posterService.getPoster(postI);
 //    }
 
-    @GetMapping("/v1/posts/{postId}")
-    public String getPoster(@PathVariable(value = "postId", required = false) Long id, Model model) {
+    @GetMapping("/v1/posts")
+    public String getPoster(@RequestParam(value = "postId") Long id, Model model) {
         PosterResponse poster = posterService.getPoster(id);
         if (poster == null) {
-            return "redirect:/board/list";
+            return "redirect:/v1/posts/list";
         }
         model.addAttribute("poster", poster);
         return "board/poster";
     }
 
-    @PostMapping(value = "/v1/posts")
-    public String writePoster(@RequestBody PosterRequest posterRequest, Model model) {
-        model.addAttribute(posterService.savePoster(posterRequest));
-        return "redirect:/board/write";
-    }
-
     @GetMapping(value = "/v1/posts/list")
-    public String openBoardList(Model model) {
+    public String openPosterList(Model model) {
         List<PosterResponse> posterList = posterService.getPosterList();
         model.addAttribute("posterList", posterList);
 
         return "board/list";
     }
 
+    @GetMapping("/v1/posts/write")
+    public String writePoster(Model model) {
+        model.addAttribute("poster", new PosterRequest());
+
+        return "board/write";
+    }
+
+    @PostMapping(value = "/v1/posts/save")
+    public String savePoster(PosterRequest posterRequest) {
+        posterService.savePoster(posterRequest);
+        return "redirect:/board/list";
+    }
+
+
     @DeleteMapping(value = "/v1/posts/{postId}")
-    public String deletePoster(@PathVariable(value = "postId", required = false) Long id){
+    public String deletePoster(@PathVariable(value = "postId") Long id){
         posterService.deletePoster(id);
         return "redirect:/board/list";
     }

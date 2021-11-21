@@ -29,8 +29,8 @@
             </div>
 
             <div class="btn_wrap text-center">
-                <a th:href="@{/board/list}" class="btn btn-default waves-effect waves-light">뒤로가기</a>
-                <a th:href="@{/board/write( id=${poster.id} )}"
+                <a th:href="@{/v1/posts/list}" class="btn btn-default waves-effect waves-light">뒤로가기</a>
+                <a th:href="@{/v1/posts/수정( id=${poster.id} )}"
                    class="btn btn-primary waves-effect waves-light">수정하기</a>
                 <button type="button" class="btn btn-danger waves-effect waves-light" th:onclick= "deletePoster ([[ ${poster.id} ]])">
                     삭제하기

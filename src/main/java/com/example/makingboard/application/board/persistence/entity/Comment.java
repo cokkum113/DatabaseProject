@@ -23,18 +23,18 @@ public class Comment extends DefaultEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
-    private Poster postEntity;
+    private Poster post;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    private Member memberEntity;
+    private Member member;
 
     @Column(name = "text", nullable = false)
     private String text;
 
     public Comment(Member member, Poster post, String text) {
-        this.memberEntity = member;
-        this.postEntity = post;
+        this.member = member;
+        this.post = post;
         this.text = text;
     }
 

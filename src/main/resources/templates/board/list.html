@@ -26,7 +26,7 @@
             <tbody>
             <tr th:if="${not #lists.isEmpty( posterList )}" th:each="row : ${posterList}">
                 <td class="text-left">
-                    <a th:href="@{/board/view( idx=${row.getId()} )}" th:text="${row.getTitle()}"></a>
+                    <a th:href="@{/v1/posts(postId=${row.getId()})}" th:text="${row.getTitle()}"></a>
                 </td>
                 <td th:text="${row.getAuthor()}"></td>
             </tr>
@@ -37,7 +37,7 @@
         </table>
 
         <div class="btn_wrap text-right">
-            <a th:href="@{/board/write}" class="btn btn-primary waves-effect waves-light">Write</a>
+            <a th:href="@{/v1/posts/write}" class="btn btn-primary waves-effect waves-light">Write</a>
         </div>
 
         <th:block layout:fragment="paging">
