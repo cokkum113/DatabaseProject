@@ -8,12 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-/*
-1. 회원가입
-2. 회원 조회
-3. 회원 탈퇴
- */
-
 @Service
 @RequiredArgsConstructor
 public class MemberService {

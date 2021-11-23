@@ -2,78 +2,46 @@
 //
 //import com.example.makingboard.application.board.dto.CommentRequest;
 //import com.example.makingboard.application.board.persistence.CommentRepository;
-//import com.example.makingboard.application.board.persistence.PosterRepository;
-//import com.example.makingboard.application.board.persistence.entity.CommentEntity;
-//import com.example.makingboard.application.board.persistence.entity.PosterEntity;
-//import com.example.makingboard.application.member.persistence.MemberRepository;
-//import com.example.makingboard.application.member.persistence.entity.MemberEntity;
+//import com.example.makingboard.application.board.persistence.entity.Comment;
+//import com.example.makingboard.application.member.MemberService;
+//import com.example.makingboard.application.member.persistence.entity.Member;
 //import lombok.RequiredArgsConstructor;
 //import org.springframework.stereotype.Service;
 //import org.springframework.transaction.annotation.Transactional;
 //
-//import java.util.ArrayList;
-//import java.util.List;
-//import java.util.Optional;
 //
-//
-///*
-//1. 댓글 쓰기
-//2. 댓글 수정하기
-//3. 유저아이디로 쓴 댓글 모아보기
-//4. TODO 대댓글 달기
-//5. 댓글지우기
-// */
 //@Service
 //@RequiredArgsConstructor
 //public class CommentService {
 //    private final CommentRepository commentRepository;
-//    private final MemberRepository memberRepository;
-//    private final PosterRepository posterRepository;
+//    private final MemberService memberService;
+//    private final PosterService posterService;
 //
 //    //댓글 쓰기
 //    @Transactional
-//    public void writeComment(CommentRequest commentRequest) {
-//        MemberEntity member = memberRepository.findFirstByName(commentRequest.getName()).get();
-//        Optional<PosterEntity> poster = posterRepository.findById(member.getId());
-//        commentRepository.save(CommentEntity.builder()
-//                .memberEntity(member)
-//                .postEntity(poster.get())
-//                .text(commentRequest.getText())
-//                .build());
+//    public Long writeComment(CommentRequest commentRequest) {
+//        Member author = memberService.getOrCreate(commentRequest.getUserName(), commentRequest.getPassword());
+//        Comment comment = commentRequest.toEntity();
+//        comment.setAuthor(author);
+//        return commentRepository.save(comment).getId();
 //    }
 //
-//    //수정하기
+//    /*
+//    댓글수정.
 //    @Transactional
-//    public void modifyComment(Long commentId, CommentRequest commentRequest) {
-//        MemberEntity member = memberRepository.findFirstByName(commentRequest.getName()).get();
-//        Optional<PosterEntity> poster = posterRepository.findById(member.getId());
-//        List<CommentEntity> comments = poster.get().getComments();
-//        for (CommentEntity comment : comments) {
-//            if (comment.getId() == commentId) {
-//                comment.modifyComment(commentRequest.getText());
-//            }
-//        }
-//
+//    public CommentResponse modifyComment(Long commentId, CommentRequest commentRequest) {
+//        Comment comment  = commentRepository.findById(commentId)
+//                .orElseThrow(() -> new IllegalArgumentException("없는 댓글입니다."));
+//        comment.modifyComment(commentRequest.getText());
+//        return new CommentResponse(comment);
 //    }
+//     */
 //
-//    //멤버이름으로 쓴 댓글 모아보기
-//    @Transactional
-//    public List<String> allGetCommentWrittenMember(String memberName) {
-//        MemberEntity member = memberRepository.findFirstByName(memberName).orElseThrow(RuntimeException::new);
-//        List<CommentEntity> comments = member.getComments();
-//        ArrayList<String> allComments = new ArrayList<>();
-//        for (CommentEntity comment : comments) {
-//            allComments.add(comment.getText());
-//        }
-//        return allComments;
-//    }
 //
 //    //댓글 지우기
 //    @Transactional
-//    public void deleteComment(Long commentId) {
-//        CommentEntity comment = commentRepository.findById(commentId)
-//                .orElseThrow(() -> new IllegalArgumentException("없는 댓글입니다"));
-//        commentRepository.delete(comment);
+//    public void deleteComment(Long id){
+//        commentRepository.deleteById(id);
 //    }
 //}
 //

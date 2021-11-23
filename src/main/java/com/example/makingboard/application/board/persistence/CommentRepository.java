@@ -1,13 +1,13 @@
 //package com.example.makingboard.application.board.persistence;
 //
-//import com.example.makingboard.application.board.persistence.entity.CommentEntity;
+//import com.example.makingboard.application.board.persistence.entity.Comment;
 //import org.springframework.data.jpa.repository.JpaRepository;
 //
 //import java.time.ZonedDateTime;
 //import java.util.List;
 //
-//public interface CommentRepository extends JpaRepository<CommentEntity, Long> {
-//    List<CommentEntity> findAllByMemberEntity(Long id);
+//public interface CommentRepository extends JpaRepository<Comment, Long> {
+//    List<Comment> findAllByMemberEntity(Long id);
 //
-//    List<CommentEntity> findAllByCreatedAtBefore(ZonedDateTime createdAt);
+//    List<Comment> findAllByCreatedAtBefore(ZonedDateTime createdAt);
 //}

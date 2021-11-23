@@ -30,12 +30,54 @@
 
             <div class="btn_wrap text-center">
                 <a th:href="@{/v1/posts/list}" class="btn btn-default waves-effect waves-light">뒤로가기</a>
-                <a th:href="@{/v1/posts/수정( id=${poster.id} )}"
+                <a th:href="@{/v1/posts/update( id=${poster.id} )}"
                    class="btn btn-primary waves-effect waves-light">수정하기</a>
-                <button type="button" class="btn btn-danger waves-effect waves-light" th:onclick= "deletePoster ([[ ${poster.id} ]])">
+                <button type="button" class="btn btn-danger waves-effect waves-light"
+                        th:onclick="deletePoster([[ ${poster.id} ]])">
                     삭제하기
                 </button>
             </div>
+        </form>
     </div>
-    <!-- /.card-content -->
 </th:block>
+
+<th:block layout:fragment="add-content">
+    <div class="box-content">
+        <div class="card-content">
+            <div class="clearfix">
+                <h4 class="box-title pull-left">Comment</h4>
+            </div>
+
+            <form class="form-horizontal form-view">
+                <div class="input-group margin-bottom-20">
+                    <input type="comment" class="form-control" placeholder="댓글을 입력하시오.">
+                    <div class="input-group-btn">
+                        <button type="submit" class="btn btn-primary waves-effect waves-light">댓글쓰기</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</th:block>
+
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+
+        function deletePoster(postId) {
+
+            if (confirm(postId + "번 게시글을 삭제할까요?")) {
+                var uri = [[@{/v1/posts/delete}]];
+                var html = "";
+
+                html += '<form name="dataForm" action="' + uri + '" method="post">';
+                html += '<input type="hidden" name="postId" value="' + postId + '" />';
+                html += '</form>';
+
+                $("body").append(html);
+                document.dataForm.submit();
+            }
+        }
+
+    </script>
+</th:block>
+</html>

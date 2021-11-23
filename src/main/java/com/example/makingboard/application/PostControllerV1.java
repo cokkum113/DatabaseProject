@@ -3,39 +3,21 @@ package com.example.makingboard.application;
 import com.example.makingboard.application.board.PosterService;
 import com.example.makingboard.application.board.dto.PosterRequest;
 import com.example.makingboard.application.board.dto.PosterResponse;
-import com.example.makingboard.application.board.persistence.entity.Poster;
+import com.example.makingboard.application.board.dto.PosterUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-/*
-1. 포스터 생성하기
-2. 포스터 수정하기
-3. 포스터 삭제하기
- */
 @Controller
 @RequiredArgsConstructor
 public class PostControllerV1 {
 
     private final PosterService posterService;
-
-//    @PostMapping("/api/v1/posts")
-//    public Long savePoster(@RequestBody PosterRequest posterRequest) {
-//        return posterService.savePoster(posterRequest);
-//    }
-//
-//    @PutMapping("/api/v1/posts/{postId}")
-//    public Long updatePoster(@PathVariable Long postId, @RequestBody PosterUpdateRequest posterUpdateRequest) {
-//        return posterService.updatePoster(postId, posterUpdateRequest);
-//    }
-//
-//    @GetMapping("/api/v1/posts/{postId}")
-//    public PosterResponse getPoster(@PathVariable Long postId) {
-//        return posterService.getPoster(postI);
-//    }
 
     @GetMapping("/v1/posts")
     public String getPoster(@RequestParam(value = "postId") Long id, Model model) {
@@ -71,9 +53,29 @@ public class PostControllerV1 {
     }
 
 
-    @DeleteMapping(value = "/v1/posts/{postId}")
-    public String deletePoster(@PathVariable(value = "postId") Long id){
+    @PostMapping (value = "/v1/posts/delete")
+    public String deletePoster(@RequestParam(value = "postId") Long id){
         posterService.deletePoster(id);
-        return "redirect:/board/list";
+        return "redirect:/v1/posts/list";
     }
+
+
+
+    @GetMapping("/v1/posts/update")
+    public String updatePoster(@RequestParam("id") Long postId, Model model) {
+        PosterUpdateRequest request = new PosterUpdateRequest();
+        request.setId(postId);
+        model.addAttribute("posterUpdateRequest", request);
+        return "board/update";
+    }
+
+
+    @PostMapping(value = "/v1/posts/updateSave")
+    public String updatePosterSave(PosterUpdateRequest posterUpdateRequest, Model model) {
+        posterService.updatePoster(posterUpdateRequest.getId(), posterUpdateRequest);
+        List<PosterResponse> posterList = posterService.getPosterList();
+        model.addAttribute("posterList", posterList);
+        return "board/list";
+   }
+
 }

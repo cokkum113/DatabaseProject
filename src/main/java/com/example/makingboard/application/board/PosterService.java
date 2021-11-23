@@ -31,11 +31,11 @@ public class PosterService {
     }
 
     @Transactional
-    public Long updatePoster(Long id, PosterUpdateRequest posterUpdateRequest) {
+    public PosterResponse updatePoster(Long id, PosterUpdateRequest posterUpdateRequest) {
         Poster poster = posterRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("없는 게시물 입니다."));
         poster.update(posterUpdateRequest.getTitle(), posterUpdateRequest.getContent());
-        return id;
+        return new PosterResponse(poster);
     }
 
     @Transactional

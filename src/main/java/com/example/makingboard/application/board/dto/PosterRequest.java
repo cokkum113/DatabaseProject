@@ -3,7 +3,6 @@ package com.example.makingboard.application.board.dto;
 import com.example.makingboard.application.board.persistence.entity.Poster;
 import lombok.*;
 
-//컨트롤러와 서비스에서 사용할 PosterDTO
 @Getter
 @NoArgsConstructor
 @ToString
