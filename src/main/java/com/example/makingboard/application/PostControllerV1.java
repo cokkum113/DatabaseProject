@@ -60,7 +60,6 @@ public class PostControllerV1 {
     }
 
 
-
     @GetMapping("/v1/posts/update")
     public String updatePoster(@RequestParam("id") Long postId, Model model) {
         PosterUpdateRequest request = new PosterUpdateRequest();
