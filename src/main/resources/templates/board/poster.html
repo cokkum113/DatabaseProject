@@ -48,15 +48,14 @@
                 <h4 class="box-title pull-left">Comment</h4>
             </div>
 
-            <form class="form-horizontal form-view">
-                <div class="input-group margin-bottom-20">
-                    <input type="comment" class="form-control" placeholder="댓글을 입력하시오.">
-                    <div class="input-group-btn">
-                        <button type="submit" class="btn btn-primary waves-effect waves-light">댓글쓰기</button>
-                    </div>
+            <form class="form-horizontal form-view" th:object="${poster}">
+                <div class="btn_wrap text-center">
+                    <a th:href="@{/v1/comment/write( id=${poster.id} )}"
+                       class="btn btn-default waves-effect waves-light">댓글쓰기</a>
                 </div>
             </form>
         </div>
+    </div>
     </div>
 </th:block>
 
@@ -66,7 +65,7 @@
         function deletePoster(postId) {
 
             if (confirm(postId + "번 게시글을 삭제할까요?")) {
-                var uri = [[@{/v1/posts/delete}]];
+                var uri = [[@{/v1/posts / delete}]];
                 var html = "";
 
                 html += '<form name="dataForm" action="' + uri + '" method="post">';

@@ -20,8 +20,8 @@ html,
 body {
   position: relative;
   height: 100%;
-  background: #f5f7fa;
-  color: #505458;
+  background: #ecb6ec;
+  color: #e5bbe0;
 }
 #wrapper {
   position: relative;
@@ -34,7 +34,7 @@ body {
   -moz-transform: translate(0, 0);
   -o-transform: translate(0, 0);
   -ms-transform: translate(0, 0);
-  background: #f5f7fa;
+  background: #ecb6ec;
   overflow: hidden;
   transition: transform 0.4s ease;
   -webkit-transition: -webkit-transform 0.4s ease;
@@ -71,7 +71,7 @@ a:active,
 a:focus {
   text-decoration: none !important;
   outline: none;
-  color: #304ffe;
+  color: #e01c4a;
 }
 input,
 button {
@@ -162,7 +162,7 @@ label {
   color: #435966;
 }
 .fa-hover:hover {
-  background: #1d84df;
+  background: #e5bbe0;
   color: #ffffff;
 }
 .fa-hover:hover .ico,
@@ -219,7 +219,7 @@ label {
   left: -200%;
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.3);
+  background: rgb(236, 182, 236);
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
   -moz-opacity: 1;
   -khtml-opacity: 1;

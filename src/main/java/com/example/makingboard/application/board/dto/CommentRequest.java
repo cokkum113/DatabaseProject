@@ -10,6 +10,7 @@ import lombok.*;
 @Setter
 public class CommentRequest {
 
+    private Long id;
     private String userName;
     private String password;
 
