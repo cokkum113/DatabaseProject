@@ -1,9 +1,12 @@
 package com.example.makingboard.application.board;
 
+import com.example.makingboard.application.board.dto.CommentResponse;
 import com.example.makingboard.application.board.dto.PosterRequest;
 import com.example.makingboard.application.board.dto.PosterResponse;
 import com.example.makingboard.application.board.dto.PosterUpdateRequest;
+import com.example.makingboard.application.board.persistence.CommentRepository;
 import com.example.makingboard.application.board.persistence.PosterRepository;
+import com.example.makingboard.application.board.persistence.entity.Comment;
 import com.example.makingboard.application.board.persistence.entity.Poster;
 import com.example.makingboard.application.member.MemberService;
 import com.example.makingboard.application.member.persistence.entity.Member;
@@ -13,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -20,6 +24,8 @@ import java.util.List;
 public class PosterService {
     private final MemberService memberService;
     private final PosterRepository posterRepository;
+    private final CommentService commentService;
+    private final CommentRepository commentRepository;
 
 
     @Transactional
@@ -57,8 +63,23 @@ public class PosterService {
         return posterResponseList;
     }
 
+
     @Transactional
     public void deletePoster(Long id) {
+
+//        Optional<Poster> poster = posterRepository.findById(id);
+//        List<Comment> comments = poster.get().getComments();
+
+        List<CommentResponse> commentResponseList = commentService.getCommentList();
+        for(CommentResponse commentResponse : commentResponseList){
+            Long commentResponseId = commentResponse.getId();
+            Comment comment= commentRepository.getById(commentResponseId);
+            Poster findPoster = comment.getPost();
+            Poster checkPoster = posterRepository.getById(id);
+            if(findPoster == checkPoster){
+                commentService.deleteComment(commentResponseId);
+            }
+        }
         posterRepository.deleteById(id);
     }
 }

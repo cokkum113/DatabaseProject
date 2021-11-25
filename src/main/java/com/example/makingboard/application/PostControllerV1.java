@@ -1,9 +1,15 @@
 package com.example.makingboard.application;
 
+import com.example.makingboard.application.board.CommentService;
 import com.example.makingboard.application.board.PosterService;
+import com.example.makingboard.application.board.dto.CommentResponse;
 import com.example.makingboard.application.board.dto.PosterRequest;
 import com.example.makingboard.application.board.dto.PosterResponse;
 import com.example.makingboard.application.board.dto.PosterUpdateRequest;
+import com.example.makingboard.application.board.persistence.CommentRepository;
+import com.example.makingboard.application.board.persistence.PosterRepository;
+import com.example.makingboard.application.board.persistence.entity.Comment;
+import com.example.makingboard.application.board.persistence.entity.Poster;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -18,6 +25,7 @@ import java.util.List;
 public class PostControllerV1 {
 
     private final PosterService posterService;
+
 
     @GetMapping("/v1/posts")
     public String getPoster(@RequestParam(value = "postId") Long id, Model model) {
@@ -58,6 +66,8 @@ public class PostControllerV1 {
         posterService.deletePoster(id);
         return "redirect:/v1/posts/list";
     }
+
+
 
 
     @GetMapping("/v1/posts/update")

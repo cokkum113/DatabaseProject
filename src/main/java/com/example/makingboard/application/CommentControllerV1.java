@@ -36,11 +36,11 @@ public class CommentControllerV1 {
 
     }
 
-//    @PostMapping("/v1/comment/delete")
-//    public String deleteComment(@RequestParam(value = "commentId") Long id){
-//
-//
-//    }
+    @PostMapping("/v1/comment/delete")
+    public String deleteComment(@RequestParam(value = "commentId") Long id){
+        commentService.deleteComment(id);
+        return "board/commentList";
+    }
 
 
 }

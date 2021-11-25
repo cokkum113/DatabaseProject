@@ -11,7 +11,6 @@ public class PosterResponse {
     private String author;
 
 
-
     public PosterResponse(Poster poster) {
         this.id = poster.getId();
         this.title = poster.getTitle();

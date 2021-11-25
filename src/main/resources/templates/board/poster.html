@@ -65,7 +65,8 @@
         function deletePoster(postId) {
 
             if (confirm(postId + "번 게시글을 삭제할까요?")) {
-                var uri = [[@{/v1/posts / delete}]];
+                // var uri = [[@{/v1/posts/delete}]];
+                var uri = [[@{/v1/posts/delete}]];
                 var html = "";
 
                 html += '<form name="dataForm" action="' + uri + '" method="post">';

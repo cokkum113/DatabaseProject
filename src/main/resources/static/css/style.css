@@ -21,7 +21,7 @@ body {
   position: relative;
   height: 100%;
   background: #ecb6ec;
-  color: #e5bbe0;
+  color: #b213e5;
 }
 #wrapper {
   position: relative;
@@ -547,21 +547,21 @@ h4 strong {
   margin-left: 8px;
 }
 .btn-primary {
-  background: #1d84df;
+  background: #ea0c9c;
 }
 .btn-primary:hover,
 .btn-primary:active,
 .btn-primary:focus {
-  background: #304ffe !important;
+  background: #ecb6ec !important;
 }
 .btn-primary.btn-bordered {
-  border-color: #1d84df;
-  color: #1d84df;
+  border-color: #ea0c9c;
+  color: #e5bbe0;
 }
 .btn-primary.btn-bordered:hover,
 .btn-primary.btn-bordered:active,
 .btn-primary.btn-bordered:focus {
-  border-color: #304ffe;
+  border-color: #ecb6ec;
   color: #ffffff;
 }
 .btn-success {
@@ -583,12 +583,12 @@ h4 strong {
   color: #ffffff;
 }
 .btn-info {
-  background: #00aeff;
+  background: #b213e5;
 }
 .btn-info:hover,
 .btn-info:active,
 .btn-info:focus {
-  background: #00aeff !important;
+  background: #e5bbe0 !important;
 }
 .btn-info.btn-bordered {
   border-color: #00aeff;
