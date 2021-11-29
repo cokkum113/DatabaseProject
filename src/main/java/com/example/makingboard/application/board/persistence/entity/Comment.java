@@ -41,8 +41,10 @@ public class Comment extends DefaultEntity {
     public void modifyComment(String comment) {
         this.text = comment;
     }
+
     public void setAuthor(Member member) {
         this.member = member;
         member.getComments().add(this);
     }
+
 }

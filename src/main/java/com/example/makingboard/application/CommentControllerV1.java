@@ -20,7 +20,7 @@ public class CommentControllerV1 {
     private final CommentService commentService;
 
     @GetMapping("/v1/comment/write")
-    public String writeComment(@RequestParam("id") Long postId,Model model) {
+    public String writeComment(@RequestParam("id") Long postId, Model model) {
         CommentRequest commentRequest = new CommentRequest();
         commentRequest.setId(postId);
         model.addAttribute("commentRequest", commentRequest);
@@ -28,16 +28,16 @@ public class CommentControllerV1 {
     }
 
     @PostMapping("/v1/comment/save")
-    public String saveComment(@RequestParam("id") Long postId,CommentRequest commentRequest, Model model) {
-         commentService.writeComment(commentRequest,postId);
-         List<CommentResponse> commentList = commentService.getCommentList();
-         model.addAttribute("commentList", commentList);
-         return "board/commentList";
+    public String saveComment(@RequestParam("id") Long postId, CommentRequest commentRequest, Model model) {
+        commentService.writeComment(commentRequest, postId);
+        List<CommentResponse> commentList = commentService.getCommentList(postId);
+        model.addAttribute("commentList", commentList);
+        return "board/commentList";
 
     }
 
     @PostMapping("/v1/comment/delete")
-    public String deleteComment(@RequestParam(value = "commentId") Long id){
+    public String deleteComment(@RequestParam(value = "commentId") Long id) {
         commentService.deleteComment(id);
         return "board/commentList";
     }

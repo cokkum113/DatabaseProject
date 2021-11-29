@@ -15,8 +15,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -51,36 +53,18 @@ public class PosterService {
         return new PosterResponse(poster);
     }
 
+
     @Transactional
     public List<PosterResponse> getPosterList() {
-        List<Poster> posterList = posterRepository.findAll();
-        List<PosterResponse> posterResponseList = new ArrayList<>();
-
-        for (Poster poster : posterList) {
-            PosterResponse posterResponse = new PosterResponse(poster);
-            posterResponseList.add(posterResponse);
-        }
-        return posterResponseList;
+        return posterRepository.findAll().stream()
+                .map(PosterResponse::new).collect(Collectors.toList());
     }
 
 
     @Transactional
     public void deletePoster(Long id) {
-
-//        Optional<Poster> poster = posterRepository.findById(id);
-//        List<Comment> comments = poster.get().getComments();
-
-        List<CommentResponse> commentResponseList = commentService.getCommentList();
-        for(CommentResponse commentResponse : commentResponseList){
-            Long commentResponseId = commentResponse.getId();
-            Comment comment= commentRepository.getById(commentResponseId);
-            Poster findPoster = comment.getPost();
-            Poster checkPoster = posterRepository.getById(id);
-            if(findPoster == checkPoster){
-                commentService.deleteComment(commentResponseId);
-            }
-        }
-        posterRepository.deleteById(id);
+        Poster poster = posterRepository.findById(id).orElseThrow(RuntimeException::new);
+        poster.getComments().forEach(x -> commentService.deleteComment(x.getId()));
     }
 }
 

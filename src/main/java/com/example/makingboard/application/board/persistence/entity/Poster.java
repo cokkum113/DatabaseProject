@@ -52,4 +52,12 @@ public class Poster extends DefaultEntity {
         this.member = member;
         member.getPosts().add(this);
     }
+
+    public Comment writeComment(Member member, String text) {
+        return Comment.builder()
+                .post(this)
+                .member(member)
+                .text(text)
+                .build();
+    }
 }
